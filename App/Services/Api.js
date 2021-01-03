@@ -1,8 +1,9 @@
 // a library to wrap and simplify api calls
 import apisauce from 'apisauce'
+import { ap } from 'ramda'
 
 // our "constructor"
-const create = (baseURL = 'https://api.github.com/') => {
+const create = (baseURL = 'https://gozour.herokuapp.com/api/') => {
   // ------
   // STEP 1
   // ------
@@ -14,7 +15,10 @@ const create = (baseURL = 'https://api.github.com/') => {
     baseURL,
     // here are some default headers
     headers: {
-      'Cache-Control': 'no-cache'
+      'Cache-Control': 'no-cache',
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      "X-Requested-With": "XMLHttpRequest",
     },
     // 10 second timeout...
     timeout: 10000
@@ -36,7 +40,8 @@ const create = (baseURL = 'https://api.github.com/') => {
   //
   const getRoot = () => api.get('')
   const getRate = () => api.get('rate_limit')
-  const getUser = (username) => api.get('search/users', {q: username})
+  const getUser = (username) => api.get('search/users', { q: username })
+  const getHomeApi = () => api.get('home')
 
   // ------
   // STEP 3
@@ -54,7 +59,8 @@ const create = (baseURL = 'https://api.github.com/') => {
     // a list of the API functions from step 2
     getRoot,
     getRate,
-    getUser
+    getUser,
+    getHomeApi
   }
 }
 
